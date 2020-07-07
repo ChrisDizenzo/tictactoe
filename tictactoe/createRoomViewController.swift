@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  createRoomViewController.swift
 //  tictactoe
 //
 //  Created by DiZenzo on 7/4/20.
@@ -7,16 +7,16 @@
 //
 
 import UIKit
-import SocketIO
 
+class createRoomViewController: UIViewController {
 
-class ViewController: UIViewController {
-
-       
+    @IBOutlet var field: UITextField!
+        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
 
+    }
+    
 
 }
-
