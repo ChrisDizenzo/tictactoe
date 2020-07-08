@@ -15,7 +15,6 @@ class boardView : UIViewController {
     var chat = false
         
     @IBAction func action(_ sender: AnyObject) {
-        print("I'm creebo")
         serverConn.makeMove(move: sender.tag-1)
     }
     
@@ -36,7 +35,6 @@ class boardView : UIViewController {
     }
     
     @IBAction func sendChat(_ sender: UIButton) {
-        print("creebin")
         serverConn.sendChat(chat: (sender.titleLabel?.text)!)
     }
     
@@ -46,8 +44,6 @@ class boardView : UIViewController {
         if let chatView = view.viewWithTag(45) as? UIButton{
             for i in 0...3{
                 if let tempView = view.viewWithTag(chatTags[i]) as? UIButton{
-                    print("puppy")
-                    print((i,chatView.frame))
                     
                     tempView.frame = chatView.frame
                     tempView.backgroundColor = .white
@@ -67,7 +63,6 @@ class boardView : UIViewController {
         for i in 0...3{
             if let tempView = view.viewWithTag(chatTags[i]){
                 let offset:CGFloat = CGFloat(i+1)*displacement
-                print((i,offset,tempView.frame.origin.y))
                 UIView.animate(withDuration: duration, delay: 0, options: .curveEaseIn, animations: {
                     tempView.frame = CGRect(x: tempView.frame.origin.x, y: tempView.frame.origin.y - offset, width: tempView.frame.width, height: tempView.frame.height)
                 }, completion: nil)
@@ -78,10 +73,7 @@ class boardView : UIViewController {
     }
     
     @objc func reload(){
-        print("reloading board")
         gameBoard = serverConn.gameBoard
-        print("Game board is:")
-        print(gameBoard)
         for i in 1...9{
             if let button:UIButton = view.viewWithTag(i) as? UIButton{
                 if (gameBoard[button.tag-1] == 1){
@@ -117,15 +109,10 @@ class boardView : UIViewController {
     }
     
     @objc func gameWin(){
-        print("I won!")
         makeReset()
     }
     
     @objc func gameLost(){
-        print("I lost :(")
-//        for case let button as UIButton in self.view.subviews {
-//            button.setImage(nil, for: .normal)
-//        }
         makeReset()
     }
     
@@ -149,18 +136,17 @@ class boardView : UIViewController {
     
     @objc func showChat(notification: Notification){
         guard let text = notification.userInfo?["chat"] as? String else { return }
-        print ("text: \(text)")
         
-        let width = UIScreen.main.bounds.width
-        let height = UIScreen.main.bounds.height
         
-        let yPos = height/2-width/2-50
-        let label = UILabel(frame: CGRect(x: 0, y: yPos, width: width, height: height))
+        let width: CGFloat = UIScreen.main.bounds.width
+        let height:CGFloat = UIScreen.main.bounds.height
+        let yPos:CGFloat = height/2-width/2-50
+        let label = UILabel(frame: CGRect(x: 0, y: yPos, width: width, height: 40))
         label.center = CGPoint(x: width/2, y: yPos)
         label.textAlignment = NSTextAlignment.center
         label.text = text
         view.addSubview(label)
-
+        view.bringSubviewToFront(label)
         
         
         label.fadeIn(completion: {
@@ -181,9 +167,8 @@ class boardView : UIViewController {
         let height = UIScreen.main.bounds.height
         
         let xPos = 10
-        let yPos = height/2-width/2-30
-        var frame: CGRect = CGRect(x: CGFloat(xPos), y: CGFloat(yPos), width: CGFloat(width/2), height:CGFloat(height/20))
-        print(frame)
+        let yPos = height/2-width/2-height/20-3
+        var frame: CGRect = CGRect(x: CGFloat(xPos), y: CGFloat(yPos), width: CGFloat(width/3), height:CGFloat(height/20))
         let newView = UIButton(frame: frame)
         newView.backgroundColor = UIColor(red: CGFloat(49/255), green: CGFloat(134/255), blue: CGFloat(255/255), alpha: CGFloat(1))
         newView.setTitle("Rematch", for: .normal)
@@ -194,8 +179,7 @@ class boardView : UIViewController {
         view.addSubview(newView)
         
         
-        frame = CGRect(x: CGFloat(xPos), y: CGFloat(yPos-20), width: CGFloat(width/2), height:CGFloat(height/5))
-        print(frame)
+        frame = CGRect(x: CGFloat(xPos), y: CGFloat(yPos-20), width: CGFloat(width/3), height:CGFloat(height/5))
         let newView2 = UIProgressView(frame: frame)
 //        newView2.backgroundColor = UIColor(red: CGFloat(49/255), green: CGFloat(134/255), blue: CGFloat(255/255), alpha: CGFloat(1))
         newView2.tag = 11
@@ -253,8 +237,6 @@ class boardView : UIViewController {
             
             
             let tempButton = UIButton(frame: CGRect(x: x, y: y, width: (width/3-thickness*2), height: (width/3-thickness*2)))
-            print(CGRect(x: x, y: y, width: width/3, height: width/3))
-//            tempButton.backgroundColor = colorArray[n%3]
             tempButton.addTarget(self, action: #selector(action), for: .touchUpInside)
             tempButton.tag = n+1
             tempButton.layer.zPosition = 1

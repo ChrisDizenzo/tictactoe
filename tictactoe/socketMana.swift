@@ -21,6 +21,7 @@ class socketMana {
     var player: Int = 0
     var gameBoard:[Int] = [0,0,0,0,0,0,0,0,0]
     var rematch = 0
+    var gameOver = false
     
     init(){
         socket = manager.defaultSocket
@@ -65,13 +66,13 @@ class socketMana {
         
         socket.on("grantWin"){
             data,ack in
-            
+            self.gameOver = true
             NotificationCenter.default.post(name: Notification.Name("gameWin"), object: nil)
         }
         
         socket.on("grantLoss"){
             data,ack in
-            
+            self.gameOver = true
             NotificationCenter.default.post(name: Notification.Name("gameLost"), object: nil)
         }
         
@@ -93,6 +94,7 @@ class socketMana {
         socket.on("gameReset"){
             data,ack in
             self.gameBoard = [0,0,0,0,0,0,0,0,0]
+            self.gameOver = false
             NotificationCenter.default.post(name: Notification.Name("reloadGameBoard"), object: nil)
             NotificationCenter.default.post(name: Notification.Name("removeRematch"), object: nil)
         }

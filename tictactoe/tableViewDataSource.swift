@@ -17,7 +17,6 @@ class tableViewDataSource: UITableViewController{
     var hostname = "Creebo"
     
     @IBAction func creatingRoom(_ sender: Any) {
-        print("I'm johhny")
         self.present(alert,animated: true,completion: nil)
     }
     
@@ -30,7 +29,6 @@ class tableViewDataSource: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reload"), object: nil)
-        print("I like puppies")
         alert.addTextField{
             (textField) in
             textField.text = "Default"
@@ -50,7 +48,6 @@ class tableViewDataSource: UITableViewController{
     }
     
     func createButton(){
-        print("Creepin")
         let button = UIButton(type: .custom)
         button.setTitleColor(UIColor.orange, for: .normal)
         button.setTitle("Make a Room", for: .normal)
@@ -70,7 +67,6 @@ class tableViewDataSource: UITableViewController{
 
         //change view to navigationController?.view, if you have a navigationController in this tableview
         view.bringSubviewToFront(button)
-        print(button.frame)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
