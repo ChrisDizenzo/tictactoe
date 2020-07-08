@@ -95,6 +95,14 @@ class socketMana {
             NotificationCenter.default.post(name: Notification.Name("reloadGameBoard"), object: nil)
             NotificationCenter.default.post(name: Notification.Name("removeRematch"), object: nil)
         }
+        
+        socket.on("sendChat"){
+            data,ack in
+            let chat = data[0] as! String
+            let userInfo : [String: String] = [ "chat" : chat ]
+            NotificationCenter.default.post(name: Notification.Name("showChat"), object: nil, userInfo: userInfo)
+            
+        }
     }
     
     func joinRoom(row:Int){
@@ -112,5 +120,11 @@ class socketMana {
     func callReset(){
         socket.emit("callReset", player)
     }
+    
+    func sendChat(chat: String){
+        socket.emit("sendChat" , chat)
+    }
 }
-
+extension Notification.Name {
+    public static let myNotificationKey = Notification.Name(rawValue: "myNotificationKey")
+}

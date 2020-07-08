@@ -12,26 +12,87 @@ class boardView : UIViewController {
     
     var gameBoard = serverConn.gameBoard
     var rematch = serverConn.rematch
+    var chat = false
         
     @IBAction func action(_ sender: AnyObject) {
         print("I'm creebo")
-        serverConn.makeMove(move: sender.tag)
+        serverConn.makeMove(move: sender.tag-1)
+    }
+    
+    @IBAction func onChatPress(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        let duration: TimeInterval = 0.6
+        let displacement:CGFloat = 60
+        
+        if sender.isSelected {
+            sender.backgroundColor = UIColor(red: 7/255, green: 135/255, blue: 254/255, alpha: 1)
+            sender.setTitleColor(.white, for: .normal)
+            moveChats(displacement: displacement,duration: duration)
+        } else{
+            sender.backgroundColor = .white
+            sender.setTitleColor(.black, for: .normal)
+            moveChats(displacement: -1*displacement,duration: duration)
+        }
+    }
+    
+    @IBAction func sendChat(_ sender: UIButton) {
+        print("creebin")
+        serverConn.sendChat(chat: (sender.titleLabel?.text)!)
+    }
+    
+    func setChats(){
+        self.view.layoutIfNeeded()
+        let chatTags = [40,41,42,43]
+        if let chatView = view.viewWithTag(45) as? UIButton{
+            for i in 0...3{
+                if let tempView = view.viewWithTag(chatTags[i]) as? UIButton{
+                    print("puppy")
+                    print((i,chatView.frame))
+                    
+                    tempView.frame = chatView.frame
+                    tempView.backgroundColor = .white
+                    tempView.layer.borderColor = CGColor(srgbRed: 7/255, green: 135/255, blue: 254/255, alpha: 1)
+                    tempView.layer.borderWidth = 3
+                    tempView.setTitleColor(UIColor(red: 7/255, green: 135/255, blue: 254/255, alpha: 1), for: .normal)
+                    self.view.bringSubviewToFront(tempView)
+                
+                }
+            }
+            self.view.bringSubviewToFront(chatView)
+        }
+    }
+    func moveChats(displacement:CGFloat,duration: Double){
+        self.view.layoutIfNeeded()
+        let chatTags = [40,41,42,43]
+        for i in 0...3{
+            if let tempView = view.viewWithTag(chatTags[i]){
+                let offset:CGFloat = CGFloat(i+1)*displacement
+                print((i,offset,tempView.frame.origin.y))
+                UIView.animate(withDuration: duration, delay: 0, options: .curveEaseIn, animations: {
+                    tempView.frame = CGRect(x: tempView.frame.origin.x, y: tempView.frame.origin.y - offset, width: tempView.frame.width, height: tempView.frame.height)
+                }, completion: nil)
+            
+            }
+        }
+        
     }
     
     @objc func reload(){
         print("reloading board")
         gameBoard = serverConn.gameBoard
-        
         print("Game board is:")
         print(gameBoard)
-        for case let button as UIButton in self.view.subviews {
-            if (button.tag < 10){
-                if (gameBoard[button.tag] == 1){
+        for i in 1...9{
+            if let button:UIButton = view.viewWithTag(i) as? UIButton{
+                if (gameBoard[button.tag-1] == 1){
                     button.setImage(UIImage(named: "big-red-x.png"), for: UIControl.State())
-                }else if (gameBoard[button.tag] == 2){
+                }else if (gameBoard[button.tag-1] == 2){
                     button.setImage(UIImage(named: "big-blue-o.png"), for: UIControl.State())
+                }else{
+                    button.setImage(nil, for: UIControl.State())
                 }
             }
+            
         }
         
     }
@@ -77,9 +138,37 @@ class boardView : UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(gameLost), name: Notification.Name("gameLost"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(removeRematch), name: Notification.Name("removeRematch"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadRematch), name: Notification.Name("reloadRematch"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showChat), name: Notification.Name("showChat"), object: nil)
         
         drawBoard()
         reload()
+        setChats()
+    }
+    
+    @objc func showChat(notification: Notification){
+        guard let text = notification.userInfo?["chat"] as? String else { return }
+        print ("text: \(text)")
+        
+        let width = UIScreen.main.bounds.width
+        let height = UIScreen.main.bounds.height
+        
+        let yPos = height/2-width/2-50
+        let label = UILabel(frame: CGRect(x: 0, y: yPos, width: width, height: height))
+        label.center = CGPoint(x: width/2, y: yPos)
+        label.textAlignment = NSTextAlignment.center
+        label.text = text
+        view.addSubview(label)
+
+        
+        
+        label.fadeIn(completion: {
+            (finished: Bool) -> Void in
+            label.fadeOut(duration: 1, delay: 0, completion: {
+                (finished: Bool) -> Void in
+                label.removeFromSuperview()
+            })
+        })
+        
     }
     
     func makeReset(){
@@ -99,6 +188,7 @@ class boardView : UIViewController {
         newView.tag = 10
         newView.layer.cornerRadius = 5
         newView.addTarget(self, action: #selector(callReset), for: .touchUpInside)
+        newView.layer.zPosition = 1
         view.addSubview(newView)
         
         
@@ -110,6 +200,7 @@ class boardView : UIViewController {
         newView2.layer.cornerRadius = 10
         newView2.transform = newView2.transform.scaledBy(x: 1, y: 8)
         newView2.progress = 0.0
+        newView2.layer.zPosition = 1
         view.addSubview(newView2)
         
     }
@@ -127,6 +218,8 @@ class boardView : UIViewController {
             let rectFrame: CGRect = CGRect(x:CGFloat(xPos), y:CGFloat(yPos), width:CGFloat(thickness*2), height:CGFloat(width))
             let greenView = UIView(frame: rectFrame)
             greenView.backgroundColor = UIColor.black
+            greenView.tag = 20+n
+            greenView.layer.zPosition = 1
             view.addSubview(greenView)
             
         }
@@ -140,6 +233,8 @@ class boardView : UIViewController {
             let rectFrame: CGRect = CGRect(x:CGFloat(xPos), y:CGFloat(yPos), width:CGFloat(width), height:CGFloat(thickness*2))
             let greenView = UIView(frame: rectFrame)
             greenView.backgroundColor = UIColor.black
+            greenView.tag = 22+n
+            greenView.layer.zPosition = 1
             view.addSubview(greenView)
 
         }
@@ -158,12 +253,32 @@ class boardView : UIViewController {
             print(CGRect(x: x, y: y, width: width/3, height: width/3))
 //            tempButton.backgroundColor = colorArray[n%3]
             tempButton.addTarget(self, action: #selector(action), for: .touchUpInside)
-            tempButton.tag = n
-
+            tempButton.tag = n+1
+            tempButton.layer.zPosition = 1
             view.addSubview(tempButton)
 
         }
         
+                
     }
     
+    
 }
+
+extension UIView {
+
+
+    func fadeIn(duration: TimeInterval = 1.0, delay: TimeInterval = 0.0, completion: ((Bool) -> Void)? = {(finished: Bool) -> Void in}) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIView.AnimationOptions.curveEaseIn, animations: {
+        self.alpha = 1.0
+        }, completion: completion)  }
+
+    func fadeOut(duration: TimeInterval = 1.0, delay: TimeInterval = 1.0, completion: ((Bool) -> Void)? = {(finished: Bool) -> Void in }) {
+        UIView.animate(withDuration: duration, delay: delay, options: UIView.AnimationOptions.curveEaseIn, animations: {
+        self.alpha = 0.0
+        self.frame.origin.y += 40
+        }, completion: completion)
+}
+
+}
+

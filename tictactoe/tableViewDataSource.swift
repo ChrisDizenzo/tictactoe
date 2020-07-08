@@ -45,9 +45,33 @@ class tableViewDataSource: UITableViewController{
             _ = alert?.textFields![0]
         }))
         
+        createButton()
+        
     }
     
-    
+    func createButton(){
+        print("Creepin")
+        let button = UIButton(type: .custom)
+        button.setTitleColor(UIColor.orange, for: .normal)
+        button.setTitle("Make a Room", for: .normal)
+        button.addTarget(self, action: #selector(creatingRoom), for: UIControl.Event.touchUpInside)
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .white
+        button.layer.borderColor = CGColor(srgbRed: 7/255, green: 135/255, blue: 254/255, alpha: 1)
+        button.layer.borderWidth = 1
+        button.setTitleColor(UIColor(red: 7/255, green: 135/255, blue: 254/255, alpha: 1), for: .normal)
+        view.addSubview(button)
+        view.addConstraints([
+            button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+        button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+        button.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+        button.heightAnchor.constraint(equalToConstant: 60)])
+
+        //change view to navigationController?.view, if you have a navigationController in this tableview
+        view.bringSubviewToFront(button)
+        print(button.frame)
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
