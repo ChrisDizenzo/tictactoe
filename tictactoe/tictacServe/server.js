@@ -177,6 +177,7 @@ function getSend(){
 
 function getPlayerFromRoom(id){
     var clients = io.sockets.adapter.rooms[id]
+    console.log("getting player from room: " + JSON.stringify(clients))
     for (i = 0; i < clients.length; i++){
         console.log(clients.sockets[i])
         console.log(clients.sockets[i].player)
