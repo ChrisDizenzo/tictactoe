@@ -177,13 +177,15 @@ function getSend(){
 
 function getPlayerFromRoom(id){
     var clients = io.sockets.adapter.rooms[id]
+    var clientKeys = Object.keys(clients.sockets)
     console.log("getting player from room: " + JSON.stringify(clients))
-    for (i = 0; i < clients.length; i++){
-        console.log(clients.sockets[i])
-        console.log(clients.sockets[i].player)
-        if (clients.sockets[i].player == 1){
+    console.log(clientKeys)
+    for (i = 0; i < clientKeys.length; i++){
+        console.log(clients.sockets[clientKeys[i]])
+        console.log(clients.sockets[clientKeys[i]].player)
+        if (clients.sockets[clientKeys[i]].player == 1){
             return 2
-        }else if (clients.sockets[i].player == 2){
+        }else if (clients.sockets[clientKeys[i]].player == 2){
             return 1
         }
     }
