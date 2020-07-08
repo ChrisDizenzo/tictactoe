@@ -25,6 +25,7 @@ io.on('connection', (socket) =>{
 
     socket.join(0)
     socket.emit("newRooms", rooms)
+    socket.player = 0
 
     socket.on('disconnect', function(){
         console.log("user disconnected")
@@ -48,8 +49,13 @@ io.on('connection', (socket) =>{
             rooms[idToRoom[socket.room]].gameBoard[move] = player
             rooms[idToRoom[socket.room]].turn = (rooms[idToRoom[socket.room]].turn == 2) ? 1:2
 
+
             if (checkBoardForWin(rooms[idToRoom[socket.room]].gameBoard)){
                 socket.emit("grantWin")
+                socket.broadcast.to(socket.room).emit("grantLoss")
+                rooms[idToRoom[socket.room]].turn = 0
+            } else if (checkBoardForTie(board)){
+                socket.emit("grantLoss")
                 socket.broadcast.to(socket.room).emit("grantLoss")
                 rooms[idToRoom[socket.room]].turn = 0
             }
@@ -91,6 +97,7 @@ io.on('connection', (socket) =>{
                 if (rooms[idToRoom[socket.room]].occupancy == 0){
                     removeRoom(socket.room)
                 }
+                socket.player = 0
             }
             socket.leave(socket.room)
 
@@ -99,7 +106,8 @@ io.on('connection', (socket) =>{
             rooms[idToRoom[id]].occupancy += 1
             out.gameBoard = rooms[idToRoom[id]].gameBoard
             if (rooms[idToRoom[id]].occupancy <= 2){
-                out.player = rooms[idToRoom[id]].occupancy
+                out.player = getPlayerFromRoom(id)
+                socket.player = getPlayerFromRoom(id)
             }
             
             out.success = true
@@ -167,6 +175,20 @@ function getSend(){
     return outArr
 }
 
+function getPlayerFromRoom(id){
+    var clients = io.sockets.clients(id)
+    for (i = 0; i < clients.length; i++){
+        console.log(clients)
+        console.log(clients.player)
+        if (clients[i].player == 1){
+            return 2
+        }else if (clients[i].player == 2){
+            return 1
+        }
+    }
+    return 0
+}
+
 function checkBoardForWin(board){
     let wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 
@@ -176,6 +198,13 @@ function checkBoardForWin(board){
         }
     }
     return false
+}
+
+function checkBoardForTie(board){
+    if (board.includes(0)){
+        return false
+    }
+    return true
 }
 
 function makeid() {
