@@ -13,8 +13,9 @@ let serverConn = socketMana()
 
 class socketMana {
     
-    let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:4000")!)
+//    let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:4000")!)
 //    let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:4000")!, config: [.log(true), .compress])
+    let manager = SocketManager(socketURL: URL(string: "http://172.6.249.239:4000")!)
     var socket:SocketIOClient
     var rooms:[room]
     var player: Int = 0

@@ -99,9 +99,11 @@ class boardView : UIViewController {
     
     @objc func reloadRematch(){
         rematch = serverConn.rematch
-        let v:UIProgressView = view.viewWithTag(11) as! UIProgressView
-        print("Creebo!!!")
-        v.progress = (rematch==0) ? 0.0:0.5
+        if let v:UIProgressView = view.viewWithTag(11) as? UIProgressView{
+            v.progress = (rematch==0) ? 0.0:0.5
+        }else{
+            makeReset()
+        }
     }
     
     @objc func removeRematch(){
@@ -192,16 +194,17 @@ class boardView : UIViewController {
         view.addSubview(newView)
         
         
-        frame = CGRect(x: CGFloat(xPos), y: CGFloat(yPos-50), width: CGFloat(width/2), height:CGFloat(height/5))
+        frame = CGRect(x: CGFloat(xPos), y: CGFloat(yPos-20), width: CGFloat(width/2), height:CGFloat(height/5))
         print(frame)
         let newView2 = UIProgressView(frame: frame)
 //        newView2.backgroundColor = UIColor(red: CGFloat(49/255), green: CGFloat(134/255), blue: CGFloat(255/255), alpha: CGFloat(1))
         newView2.tag = 11
-        newView2.layer.cornerRadius = 10
+        newView2.layer.cornerRadius = 30
         newView2.transform = newView2.transform.scaledBy(x: 1, y: 8)
         newView2.progress = 0.0
         newView2.layer.zPosition = 1
         view.addSubview(newView2)
+        
         
     }
     

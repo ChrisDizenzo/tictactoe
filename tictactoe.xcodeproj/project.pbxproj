@@ -19,7 +19,6 @@
 		052F584524B1123C005BCAB9 /* tictactoeBoard.png in Resources */ = {isa = PBXBuildFile; fileRef = 052F584424B1123C005BCAB9 /* tictactoeBoard.png */; };
 		059596AB24B3CB89005895BA /* boardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059596AA24B3CB89005895BA /* boardView.swift */; };
 		05DBA86224B14DBE007FFD67 /* socketMana.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DBA86124B14DBE007FFD67 /* socketMana.swift */; };
-		05DBA86824B153B4007FFD67 /* roomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DBA86724B153B4007FFD67 /* roomsView.swift */; };
 		05DBA86A24B1568A007FFD67 /* tableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DBA86924B1568A007FFD67 /* tableViewDataSource.swift */; };
 		05DBA86C24B1570C007FFD67 /* room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DBA86B24B1570C007FFD67 /* room.swift */; };
 		C1113729C909B0013C1001A5 /* Pods_tictactoe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F282C39DA07B9EC238BDD3D5 /* Pods_tictactoe.framework */; };
@@ -40,7 +39,6 @@
 		052F584424B1123C005BCAB9 /* tictactoeBoard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tictactoeBoard.png; path = ../../../Documents/tictactoeBoard.png; sourceTree = "<group>"; };
 		059596AA24B3CB89005895BA /* boardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boardView.swift; sourceTree = "<group>"; };
 		05DBA86124B14DBE007FFD67 /* socketMana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = socketMana.swift; sourceTree = "<group>"; };
-		05DBA86724B153B4007FFD67 /* roomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = roomsView.swift; path = /Users/dizenzo/Desktop/tictactoe/tictactoe/roomsView.swift; sourceTree = "<absolute>"; };
 		05DBA86924B1568A007FFD67 /* tableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tableViewDataSource.swift; sourceTree = "<group>"; };
 		05DBA86B24B1570C007FFD67 /* room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = room.swift; sourceTree = "<group>"; };
 		84096ACC16355699268F655C /* Pods-tictactoe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tictactoe.release.xcconfig"; path = "Target Support Files/Pods-tictactoe/Pods-tictactoe.release.xcconfig"; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 				052F582F24B110F5005BCAB9 /* SceneDelegate.swift */,
 				059596AA24B3CB89005895BA /* boardView.swift */,
 				05DBA86124B14DBE007FFD67 /* socketMana.swift */,
-				05DBA86724B153B4007FFD67 /* roomsView.swift */,
 				05DBA86924B1568A007FFD67 /* tableViewDataSource.swift */,
 				05DBA86B24B1570C007FFD67 /* room.swift */,
 				052F583324B110F5005BCAB9 /* Main.storyboard */,
@@ -241,7 +238,6 @@
 				052F582E24B110F5005BCAB9 /* AppDelegate.swift in Sources */,
 				05DBA86C24B1570C007FFD67 /* room.swift in Sources */,
 				052F583824B110F5005BCAB9 /* tictactoe.xcdatamodeld in Sources */,
-				05DBA86824B153B4007FFD67 /* roomsView.swift in Sources */,
 				052F583024B110F5005BCAB9 /* SceneDelegate.swift in Sources */,
 				05DBA86A24B1568A007FFD67 /* tableViewDataSource.swift in Sources */,
 				05DBA86224B14DBE007FFD67 /* socketMana.swift in Sources */,
