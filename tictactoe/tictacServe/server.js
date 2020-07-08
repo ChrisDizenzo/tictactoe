@@ -55,7 +55,7 @@ io.on('connection', (socket) =>{
                 socket.emit("grantWin")
                 socket.broadcast.to(socket.room).emit("grantLoss")
                 rooms[idToRoom[socket.room]].turn = 0
-            } else if (checkBoardForTie(board)){
+            } else if (checkBoardForTie(rooms[idToRoom[socket.room]].gameBoard)){
                 socket.emit("grantLoss")
                 socket.broadcast.to(socket.room).emit("grantLoss")
                 rooms[idToRoom[socket.room]].turn = 0
