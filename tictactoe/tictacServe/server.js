@@ -107,7 +107,7 @@ io.on('connection', (socket) =>{
             rooms[idToRoom[id]].occupancy += 1
             out.gameBoard = rooms[idToRoom[id]].gameBoard
             if (rooms[idToRoom[id]].occupancy <= 2){
-                socketsRoles[socket.id] = getPlayerFromRoom(id)
+                out.player = getPlayerFromRoom(id)
                 socketsRoles[socket.id] = getPlayerFromRoom(id)
             }
             
