@@ -176,7 +176,7 @@ function getSend(){
 }
 
 function getPlayerFromRoom(id){
-    var clients = io.sockets.clients(id)
+    var clients = io.sockets.adapter.rooms[id]
     for (i = 0; i < clients.length; i++){
         console.log(clients)
         console.log(clients.player)
