@@ -179,18 +179,26 @@ function getSend(){
 function getPlayerFromRoom(id){
     var clients = io.sockets.adapter.rooms[id]
     var clientKeys = Object.keys(clients.sockets)
+    var isPlayer1 = false
+    var isPlayer2 = false
     console.log("getting player from room: " + JSON.stringify(clients))
     console.log(clientKeys)
     for (i = 0; i < clientKeys.length; i++){
-        console.log(clients.sockets[clientKeys[i]])
         console.log(socketsRoles[clientKeys[i]])
         if (socketsRoles[clientKeys[i]] == 1){
-            return 2
+            isPlayer1 = true
         }else if (socketsRoles[clientKeys[i]] == 2){
-            return 1
+            isPlayer2 = true
         }
     }
-    return 0
+    console.log((isPlayer1,isPlayer2))
+    if (!isPlayer1){
+        return 1
+    }else if (!isPlayer2){
+        return 2
+    }else {
+        return 0
+    }
 }
 
 function checkBoardForWin(board){
