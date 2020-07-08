@@ -15,6 +15,7 @@ console.log("listening on: " +host + ":" + port)
 
 var rooms = []
 var idToRoom = {}
+var socketsRoles = {}
 
 app.get('/', (req,res) =>{
     res.send('<h1> Hello world </h1>')
@@ -25,7 +26,7 @@ io.on('connection', (socket) =>{
 
     socket.join(0)
     socket.emit("newRooms", rooms)
-    socket.player = 0
+    socketsRoles[socket.id] = 0
 
     socket.on('disconnect', function(){
         console.log("user disconnected")
@@ -97,7 +98,7 @@ io.on('connection', (socket) =>{
                 if (rooms[idToRoom[socket.room]].occupancy == 0){
                     removeRoom(socket.room)
                 }
-                socket.player = 0
+                socketsRoles[socket.id] = 0
             }
             socket.leave(socket.room)
 
@@ -106,8 +107,8 @@ io.on('connection', (socket) =>{
             rooms[idToRoom[id]].occupancy += 1
             out.gameBoard = rooms[idToRoom[id]].gameBoard
             if (rooms[idToRoom[id]].occupancy <= 2){
-                out.player = getPlayerFromRoom(id)
-                socket.player = getPlayerFromRoom(id)
+                socketsRoles[socket.id] = getPlayerFromRoom(id)
+                socketsRoles[socket.id] = getPlayerFromRoom(id)
             }
             
             out.success = true
@@ -182,10 +183,10 @@ function getPlayerFromRoom(id){
     console.log(clientKeys)
     for (i = 0; i < clientKeys.length; i++){
         console.log(clients.sockets[clientKeys[i]])
-        console.log(clients.sockets[clientKeys[i]].player)
-        if (clients.sockets[clientKeys[i]].player == 1){
+        console.log(socketsRoles[clientKeys[i]])
+        if (socketsRoles[clientKeys[i]] == 1){
             return 2
-        }else if (clients.sockets[clientKeys[i]].player == 2){
+        }else if (socketsRoles[clientKeys[i]] == 2){
             return 1
         }
     }
