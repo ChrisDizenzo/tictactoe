@@ -1,0 +1,27 @@
+{
+  "name": "tictacserve",
+  "version": "1.0.0",
+  "description": "making tictactoe server",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "moment": "^2.27.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisDizenzo/tictactoeServer.git"
+  },
+  "author": "chrisDizenzo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChrisDizenzo/tictactoeServer/issues"
+  },
+  "homepage": "https://github.com/ChrisDizenzo/tictactoeServer#readme"
+}
