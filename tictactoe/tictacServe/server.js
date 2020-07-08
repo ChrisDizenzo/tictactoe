@@ -178,11 +178,11 @@ function getSend(){
 function getPlayerFromRoom(id){
     var clients = io.sockets.adapter.rooms[id]
     for (i = 0; i < clients.length; i++){
-        console.log(clients)
-        console.log(clients.player)
-        if (clients[i].player == 1){
+        console.log(clients.sockets[i])
+        console.log(clients.sockets[i].player)
+        if (clients.sockets[i].player == 1){
             return 2
-        }else if (clients[i].player == 2){
+        }else if (clients.sockets[i].player == 2){
             return 1
         }
     }
