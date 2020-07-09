@@ -30,6 +30,7 @@ var idToRoom = {}
 // Ensuring no user with a different role can make moves
 var socketsRoles = {}
 
+// Server check if running
 app.get('/', (req,res) =>{
     res.send('<h1> Hello world </h1>')
 })

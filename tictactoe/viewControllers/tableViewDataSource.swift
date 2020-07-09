@@ -1,11 +1,3 @@
-//
-//  tableViewDataSource.swift
-//  tictactoe
-//
-//  Created by DiZenzo on 7/4/20.
-//  Copyright © 2020 DiZenzo. All rights reserved.
-//
-
 import UIKit
 import SocketIO
 
@@ -22,7 +14,7 @@ class tableViewDataSource: UITableViewController{
         self.present(alert,animated: true,completion: nil)
     }
     
-    /// function to relead the data when more data is pushed to the rooms array in the socket Manager
+    /// Function to relead the data when more data is pushed to the rooms array in the socket Manager
     @objc func reload(){
         tableView.reloadData()
     }
@@ -50,7 +42,7 @@ class tableViewDataSource: UITableViewController{
         
     }
     
-    /// initialization function for the "Make a Room" button
+    /// Initialization function for the "Make a Room" button
     func createButton(){
         let button = UIButton(type: .custom)
         button.setTitleColor(UIColor.orange, for: .normal)

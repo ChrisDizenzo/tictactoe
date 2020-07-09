@@ -1,11 +1,3 @@
-//
-//  boardView.swift
-//  tictactoe
-//
-//  Created by DiZenzo on 7/6/20.
-//  Copyright © 2020 DiZenzo. All rights reserved.
-//
-
 import UIKit
 
 class boardView : UIViewController {
@@ -147,8 +139,6 @@ class boardView : UIViewController {
         
     }
         
-      
-    
     /// Creates the buttons for each quickchat in chatTags and places them behind the chat button
     func setChats(){
         self.view.layoutIfNeeded()
@@ -186,8 +176,6 @@ class boardView : UIViewController {
         }
         
     }
-
-
 
     /// Draws the rematch button if the player is an X or an O
     /// The position of the Rematch button is offset a constant amount (in yPos) from the gameboard 
