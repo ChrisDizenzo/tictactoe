@@ -9,9 +9,9 @@
 import Foundation
 import SocketIO
 
-let serverConn = socketMana()
+let serverConnection = socketManager()
 
-class socketMana {
+class socketManager {
     
 //    let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:4000")!)
 //    let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:4000")!, config: [.log(true), .compress])
@@ -113,7 +113,7 @@ class socketMana {
     }
     
     func createRoom(title:String,host: String){
-        serverConn.socket.emit("createRoom", title, host)
+        socket.emit("createRoom", title, host)
     }
     
     func makeMove(move: Int){

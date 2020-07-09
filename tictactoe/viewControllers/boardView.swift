@@ -10,12 +10,12 @@ import UIKit
 
 class boardView : UIViewController {
     
-    var gameBoard = serverConn.gameBoard
-    var rematch = serverConn.rematch
+    var gameBoard = serverConnection.gameBoard
+    var rematch = serverConnection.rematch
     var chat = false
         
     @IBAction func action(_ sender: AnyObject) {
-        serverConn.makeMove(move: sender.tag-1)
+        serverConnection.makeMove(move: sender.tag-1)
     }
     
     @IBAction func onChatPress(_ sender: UIButton) {
@@ -35,7 +35,7 @@ class boardView : UIViewController {
     }
     
     @IBAction func sendChat(_ sender: UIButton) {
-        serverConn.sendChat(chat: (sender.titleLabel?.text)!)
+        serverConnection.sendChat(chat: (sender.titleLabel?.text)!)
     }
     
     func setChats(){
@@ -73,7 +73,7 @@ class boardView : UIViewController {
     }
     
     @objc func reload(){
-        gameBoard = serverConn.gameBoard
+        gameBoard = serverConnection.gameBoard
         for i in 1...9{
             if let button:UIButton = view.viewWithTag(i) as? UIButton{
                 if (gameBoard[button.tag-1] == 1){
@@ -90,7 +90,7 @@ class boardView : UIViewController {
     }
     
     @objc func reloadRematch(){
-        rematch = serverConn.rematch
+        rematch = serverConnection.rematch
         if let v:UIProgressView = view.viewWithTag(11) as? UIProgressView{
             v.progress = (rematch==0) ? 0.0:0.5
         }else{
@@ -117,7 +117,7 @@ class boardView : UIViewController {
     }
     
     @objc func callReset(){
-        serverConn.callReset()
+        serverConnection.callReset()
     }
         
     override func viewDidLoad() {
@@ -160,7 +160,7 @@ class boardView : UIViewController {
     }
     
     func makeReset(){
-        if (serverConn.player > 2){
+        if (serverConnection.player > 2){
             return
         }
         let width = UIScreen.main.bounds.width

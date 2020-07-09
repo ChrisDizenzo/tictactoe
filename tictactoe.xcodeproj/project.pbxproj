@@ -75,10 +75,9 @@
 			children = (
 				052F582D24B110F5005BCAB9 /* AppDelegate.swift */,
 				052F582F24B110F5005BCAB9 /* SceneDelegate.swift */,
-				059596AA24B3CB89005895BA /* boardView.swift */,
-				05DBA86124B14DBE007FFD67 /* socketManager.swift */,
-				05DBA86924B1568A007FFD67 /* tableViewDataSource.swift */,
-				05DBA86B24B1570C007FFD67 /* room.swift */,
+				7EF7B1AF24B7681500E6C1D4 /* dataTypes */,
+				7EF7B1AE24B766F700E6C1D4 /* dataManagers */,
+				7EF7B1AD24B764D300E6C1D4 /* viewControllers */,
 				052F583324B110F5005BCAB9 /* Main.storyboard */,
 				052F583924B110F7005BCAB9 /* Assets.xcassets */,
 				052F583B24B110F7005BCAB9 /* LaunchScreen.storyboard */,
@@ -96,6 +95,31 @@
 				84096ACC16355699268F655C /* Pods-tictactoe.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		7EF7B1AD24B764D300E6C1D4 /* viewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				059596AA24B3CB89005895BA /* boardView.swift */,
+				05DBA86924B1568A007FFD67 /* tableViewDataSource.swift */,
+			);
+			path = viewControllers;
+			sourceTree = "<group>";
+		};
+		7EF7B1AE24B766F700E6C1D4 /* dataManagers */ = {
+			isa = PBXGroup;
+			children = (
+				05DBA86124B14DBE007FFD67 /* socketManager.swift */,
+			);
+			path = dataManagers;
+			sourceTree = "<group>";
+		};
+		7EF7B1AF24B7681500E6C1D4 /* dataTypes */ = {
+			isa = PBXGroup;
+			children = (
+				05DBA86B24B1570C007FFD67 /* room.swift */,
+			);
+			path = dataTypes;
 			sourceTree = "<group>";
 		};
 		F0AB22E93E0CA098EE5089BE /* Frameworks */ = {
