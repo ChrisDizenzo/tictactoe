@@ -80,7 +80,6 @@ io.on('connection', (socket) =>{
     // Makes new data for room, pushes the id to idToRoom, adds to rooms array, sends new rooms array
     // Currently it is sending the entire array whenever a new room is made, this isnt efficient but the redundancy ensures consistency across clients
     socket.on("createRoom", (title,host)=>{
-        console.log("No idea what this is gonna be: " + title + " or this? " + host)
         var newID = makeid()
         var temp = {
             id: newID,
@@ -176,17 +175,13 @@ io.on('connection', (socket) =>{
 // This function removes a room give the id
 // First must remove the room from the array, and change all the references in the idToRoom object to correctly point to the new array objects
 function removeRoom(id){
-    console.log(JSON.stringify(idToRoom))
     Object.keys(idToRoom).forEach((key) =>{
         if (idToRoom[key] > idToRoom[id]){
             idToRoom[key] -= 1
         }
     })
-    console.log("LOOOOOOKINGG FORRR ID: " + id)
     rooms.splice(idToRoom[id],1)
     delete idToRoom[id]
-    console.log(JSON.stringify(idToRoom))
-    console.log(rooms)
 }
 
 // Just a simple getter for all the rooms, but excludes data the client doesn't yet need
@@ -211,17 +206,13 @@ function getPlayerFromRoom(id){
     var clientKeys = Object.keys(clients.sockets)
     var isPlayer1 = false
     var isPlayer2 = false
-    console.log("getting player from room: " + JSON.stringify(clients))
-    console.log(clientKeys)
     for (i = 0; i < clientKeys.length; i++){
-        console.log(socketsRoles[clientKeys[i]])
         if (socketsRoles[clientKeys[i]] == 1){
             isPlayer1 = true
         }else if (socketsRoles[clientKeys[i]] == 2){
             isPlayer2 = true
         }
     }
-    console.log((isPlayer1,isPlayer2))
     if (!isPlayer1){
         return 1
     }else if (!isPlayer2){
