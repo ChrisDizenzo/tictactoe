@@ -15,9 +15,6 @@ Its a tic tac toe game and its on TestFlight!!
       > Note: If you dont have CocoaPods install is very easy and is [here](https://cocoapods.org/) 
 
       ```
-      git clone https://github.com/ChrisDizenzo/tictactoe.git
-      ```
-      ```
       pod install
       ```
 3. Open the .xcworkspace file created after the pod install. If you open the project file then socketio will not be attached and it will fail
