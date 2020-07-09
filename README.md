@@ -17,7 +17,7 @@ Also dont forget to read the [documentation!!](https://tictactoe-74f2c.web.app/d
       ```
       pod install
       ```
-3. Open the .xcworkspace file created after the pod install. Make sure to always open the Xcode workspace instead of the project file when building
+3. Open the tictactoe.xcworkspace file created after the pod install. Make sure to always open the Xcode workspace instead of the project file when building
 
 ## Adding Features
 
