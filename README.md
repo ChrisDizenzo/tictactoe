@@ -6,11 +6,7 @@ Also dont forget to read the [documentation!!](https://tictactoe-74f2c.web.app/d
 
 ## Getting Started
 
-1. Clone this repo locally
-      
-      ```
-      git clone https://github.com/ChrisDizenzo/tictactoe.git
-      ```
+1. Download the zip file and extract contents
 2. Attach the dependencies using cocoapods
       > Note: If you dont have CocoaPods installed is very easy and is [here](https://cocoapods.org/) 
 
