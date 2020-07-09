@@ -4,7 +4,7 @@ Its a tic tac toe game and its on TestFlight!!
 
 ## Getting Started
 
-> Note: before proceeding make sure you have read the documentation: here(https://firebase.google.com/docs)
+> Note: before proceeding make sure you have read the documentation: [here](https://firebase.google.com/docs)
 
 1. Clone this repo locally
       
