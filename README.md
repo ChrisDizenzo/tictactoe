@@ -4,7 +4,7 @@ Its a tic tac toe game and its on TestFlight!!
 
 ## Getting Started
 
-> Note: If you wish to add features there is [documentation](https://firebase.google.com/docs) that can help 
+> Note: If you wish to add features there is [documentation](https://tictactoe-74f2c.web.app/docs) that can help 
 
 1. Clone this repo locally
       
