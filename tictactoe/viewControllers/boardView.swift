@@ -12,12 +12,21 @@ class boardView : UIViewController {
     
     var gameBoard = serverConnection.gameBoard
     var rematch = serverConnection.rematch
+    
+    /// Boolean if the chat is open
     var chat = false
+
+    /// Tags for the chat messages
+    let chatTags = [40,41,42,43]
         
+    /// Makes a move when a button is pressed, server checks for validity of button move
     @IBAction func action(_ sender: AnyObject) {
         serverConnection.makeMove(move: sender.tag-1)
     }
     
+    /// This controls the "chat" that is optionally open
+    /// The duration is the speed the buttons open
+    /// The displacement is the distance from one center of a chat button to another center
     @IBAction func onChatPress(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         let duration: TimeInterval = 0.6
@@ -34,44 +43,29 @@ class boardView : UIViewController {
         }
     }
     
+    /// Action for buttons to send chats
     @IBAction func sendChat(_ sender: UIButton) {
         serverConnection.sendChat(chat: (sender.titleLabel?.text)!)
     }
-    
-    func setChats(){
-        self.view.layoutIfNeeded()
-        let chatTags = [40,41,42,43]
-        if let chatView = view.viewWithTag(45) as? UIButton{
-            for i in 0...3{
-                if let tempView = view.viewWithTag(chatTags[i]) as? UIButton{
-                    
-                    tempView.frame = chatView.frame
-                    tempView.backgroundColor = .white
-                    tempView.layer.borderColor = CGColor(srgbRed: 7/255, green: 135/255, blue: 254/255, alpha: 1)
-                    tempView.layer.borderWidth = 3
-                    tempView.setTitleColor(UIColor(red: 7/255, green: 135/255, blue: 254/255, alpha: 1), for: .normal)
-                    self.view.bringSubviewToFront(tempView)
-                
-                }
-            }
-            self.view.bringSubviewToFront(chatView)
-        }
-    }
-    func moveChats(displacement:CGFloat,duration: Double){
-        self.view.layoutIfNeeded()
-        let chatTags = [40,41,42,43]
-        for i in 0...3{
-            if let tempView = view.viewWithTag(chatTags[i]){
-                let offset:CGFloat = CGFloat(i+1)*displacement
-                UIView.animate(withDuration: duration, delay: 0, options: .curveEaseIn, animations: {
-                    tempView.frame = CGRect(x: tempView.frame.origin.x, y: tempView.frame.origin.y - offset, width: tempView.frame.width, height: tempView.frame.height)
-                }, completion: nil)
-            
-            }
-        }
+
+    /// Must initialize the Notification Center of the handlers for each socket data stream
+    /// Then draws the board and the chat by calling initialization functions
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reloadGameBoard"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(gameWin), name: Notification.Name("gameWin"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(gameLost), name: Notification.Name("gameLost"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(removeRematch), name: Notification.Name("removeRematch"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadRematch), name: Notification.Name("reloadRematch"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showChat), name: Notification.Name("showChat"), object: nil)
         
+        drawBoard()
+        reload()
+        setChats()
     }
     
+    
+    /// Reloads the game board
     @objc func reload(){
         gameBoard = serverConnection.gameBoard
         for i in 1...9{
@@ -89,6 +83,7 @@ class boardView : UIViewController {
         
     }
     
+    /// Reloads the rematch button and progressview if it does not exist, if it does exist it properly changes the progress view
     @objc func reloadRematch(){
         rematch = serverConnection.rematch
         if let v:UIProgressView = view.viewWithTag(11) as? UIProgressView{
@@ -98,6 +93,7 @@ class boardView : UIViewController {
         }
     }
     
+    /// Removes the rematch button and the progress view from the superview and also resets the game board images to nil
     @objc func removeRematch(){
         view.viewWithTag(10)?.removeFromSuperview()
         view.viewWithTag(11)?.removeFromSuperview()
@@ -108,32 +104,24 @@ class boardView : UIViewController {
         }
     }
     
+    /// Win function for the Notification center
     @objc func gameWin(){
         makeReset()
     }
     
+    /// Lose function for the Notification center
     @objc func gameLost(){
         makeReset()
     }
     
+    /// Handles when user presses the rematch button, notifies the socket
     @objc func callReset(){
         serverConnection.callReset()
     }
-        
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name("reloadGameBoard"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(gameWin), name: Notification.Name("gameWin"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(gameLost), name: Notification.Name("gameLost"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(removeRematch), name: Notification.Name("removeRematch"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadRematch), name: Notification.Name("reloadRematch"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(showChat), name: Notification.Name("showChat"), object: nil)
-        
-        drawBoard()
-        reload()
-        setChats()
-    }
-    
+
+    /// Takes in chat from server and handles the displaying of the corresponding text box with fade in and fade out
+    ///
+    /// - parameter notification: recieving object with userInfo that contains chat
     @objc func showChat(notification: Notification){
         guard let text = notification.userInfo?["chat"] as? String else { return }
         
@@ -158,7 +146,51 @@ class boardView : UIViewController {
         })
         
     }
+        
+      
     
+    /// Creates the buttons for each quickchat in chatTags and places them behind the chat button
+    func setChats(){
+        self.view.layoutIfNeeded()
+        if let chatView = view.viewWithTag(45) as? UIButton{
+            for i in 0...3{
+                if let tempView = view.viewWithTag(chatTags[i]) as? UIButton{
+                    
+                    tempView.frame = chatView.frame
+                    tempView.backgroundColor = .white
+                    tempView.layer.borderColor = CGColor(srgbRed: 7/255, green: 135/255, blue: 254/255, alpha: 1)
+                    tempView.layer.borderWidth = 3
+                    tempView.setTitleColor(UIColor(red: 7/255, green: 135/255, blue: 254/255, alpha: 1), for: .normal)
+                    self.view.bringSubviewToFront(tempView)
+                
+                }
+            }
+            self.view.bringSubviewToFront(chatView)
+        }
+    }
+
+    /// Moves the chats up and down given displacement
+    ///
+    /// - parameter displacement: distance from one chat to another
+    /// - parameter duration: time take to move through given displacement
+    func moveChats(displacement:CGFloat,duration: Double){
+        self.view.layoutIfNeeded()
+        for i in 0...3{
+            if let tempView = view.viewWithTag(chatTags[i]){
+                let offset:CGFloat = CGFloat(i+1)*displacement
+                UIView.animate(withDuration: duration, delay: 0, options: .curveEaseIn, animations: {
+                    tempView.frame = CGRect(x: tempView.frame.origin.x, y: tempView.frame.origin.y - offset, width: tempView.frame.width, height: tempView.frame.height)
+                }, completion: nil)
+            
+            }
+        }
+        
+    }
+
+
+
+    /// Draws the rematch button if the player is an X or an O
+    /// The position of the Rematch button is offset a constant amount (in yPos) from the gameboard 
     func makeReset(){
         if (serverConnection.player > 2){
             return
@@ -192,6 +224,8 @@ class boardView : UIViewController {
         
     }
     
+    /// Draws the game board using four rectangles the width of the screen and in the center of the screen
+    /// Then draws all the buttons over the game board
     func drawBoard(){
 
         // Draw vertical bars
@@ -250,6 +284,8 @@ class boardView : UIViewController {
     
 }
 
+/// This is an extension of UIView to add the fade in and fade out functionality
+/// Note here that you can change the time intervals for how long to fade in or out here
 extension UIView {
 
 
