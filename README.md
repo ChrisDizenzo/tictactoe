@@ -1,10 +1,10 @@
-# tictactoe
-Its a tic tac toe game and its on TestFlight!!
+# Tic Tac Toe
+Its a tic tac toe game and its on TestFlight!! 
 [**testFlightLink**](https://testflight.apple.com/join/j9ZwgWuQ)
 
-## Getting Started
+Also dont forget to read the [documentation](https://tictactoe-74f2c.web.app/docs) that can help
 
-> Note: If you wish to add features there is [documentation](https://tictactoe-74f2c.web.app/docs) that can help 
+## Getting Started
 
 1. Clone this repo locally
       
