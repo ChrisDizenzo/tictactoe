@@ -201,7 +201,6 @@ class boardView : UIViewController {
         
         frame = CGRect(x: CGFloat(xPos), y: CGFloat(yPos-20), width: CGFloat(width/3), height:CGFloat(height/5))
         let newView2 = UIProgressView(frame: frame)
-//        newView2.backgroundColor = UIColor(red: CGFloat(49/255), green: CGFloat(134/255), blue: CGFloat(255/255), alpha: CGFloat(1))
         newView2.tag = 11
         newView2.layer.cornerRadius = 30
         newView2.transform = newView2.transform.scaledBy(x: 1, y: 8)
@@ -253,7 +252,6 @@ class boardView : UIViewController {
         var y : CGFloat
         for n in 0...8{
             x = CGFloat((n%3))*width/3 + thickness
-            
             let flr = CGFloat(n/3-2)
             y = height/2+(2*flr+1)*width/6+thickness
             
@@ -275,8 +273,6 @@ class boardView : UIViewController {
 /// This is an extension of UIView to add the fade in and fade out functionality
 /// Note here that you can change the time intervals for how long to fade in or out here
 extension UIView {
-
-
     func fadeIn(duration: TimeInterval = 1.0, delay: TimeInterval = 0.0, completion: ((Bool) -> Void)? = {(finished: Bool) -> Void in}) {
         UIView.animate(withDuration: duration, delay: delay, options: UIView.AnimationOptions.curveEaseIn, animations: {
         self.alpha = 1.0
@@ -288,6 +284,5 @@ extension UIView {
         self.frame.origin.y += 40
         }, completion: completion)
 }
-
 }
 

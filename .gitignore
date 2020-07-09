@@ -18,6 +18,8 @@ Icon
 .Trashes
 Podfile.lock
 Pods/
+*/node_modules
+*.log
 
 # Directories potentially created on remote AFP share
 .AppleDB
