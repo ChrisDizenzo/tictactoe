@@ -2,7 +2,7 @@
 Its a tic tac toe game and its on TestFlight!! 
 [**testFlightLink**](https://testflight.apple.com/join/j9ZwgWuQ)
 
-Also dont forget to read the [documentation](https://tictactoe-74f2c.web.app/docs) that can help
+Also dont forget to read the [documentation!!](https://tictactoe-74f2c.web.app/docs)
 
 ## Getting Started
 
