@@ -1,5 +1,5 @@
 ---
-id: doc2
+id: BoardView
 title: BoardView
 ---
 export const Highlight = ({children, color}) => ( <span style={{
