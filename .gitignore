@@ -19,6 +19,7 @@ Icon
 Podfile.lock
 Pods/
 */node_modules
+*/build
 *.log
 
 # Directories potentially created on remote AFP share
