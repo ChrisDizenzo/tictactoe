@@ -12,8 +12,11 @@ Its a tic tac toe game and its on TestFlight!!
       git clone https://github.com/ChrisDizenzo/tictactoe.git
       ```
 2. Attach the dependencies using cocoapods
-> Note: If you dont have CocoaPods install is very easy and is [here](https://cocoapods.org/) 
+      > Note: If you dont have CocoaPods install is very easy and is [here](https://cocoapods.org/) 
 
+      ```
+      git clone https://github.com/ChrisDizenzo/tictactoe.git
+      ```
       ```
       pod install
       ```
