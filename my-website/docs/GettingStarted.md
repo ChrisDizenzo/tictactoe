@@ -27,3 +27,5 @@ Its a tic tac toe game and its on TestFlight!!
 ## Adding Features
 
 The documentation is split up first on client and server, then on each controller or handler on the respective side. If you wish to add features to a view, read the documentation for that controller.
+
+This app was built using SocketIO in swift, so this is a realtime updating iphone application that connects to a server I have running in my home. The reverse proxy is handled through NGINX see NGINX conf for more info on how the TCP connection is handled.
